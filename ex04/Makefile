@@ -3,7 +3,7 @@ NAME = sedIsForLosers
 
 #Compiler and flags 
 CC = g++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g
 
 #Source files
 SRCS = main.cpp 
