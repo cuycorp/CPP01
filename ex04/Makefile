@@ -6,7 +6,7 @@ CC = g++
 FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g
 
 #Source files
-SRCS = main.cpp 
+SRCS = src/main.cpp src/processLine.cpp src/FileReader.cpp 
 
 #Object file
 OBJS = $(SRCS:%.cpp=%.o)
