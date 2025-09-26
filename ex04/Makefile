@@ -3,21 +3,25 @@ NAME = sedIsForLosers
 
 #Compiler and flags 
 CC = g++
-FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g
+IFLAGS = -I include
+FLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g ${IFLAGS}
 
 #Source files
 SRCS = src/main.cpp src/processLine.cpp src/FileReader.cpp 
 
 #Object file
-OBJS = $(SRCS:%.cpp=%.o)
+OBJS = $(SRCS:src/%.cpp=obj/%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJS) 
+obj:
+	mkdir -p obj 
+
+$(NAME): obj $(OBJS) 
 	$(CC) $(FLAGS) $(OBJS) -o $(NAME) 
 
 #Compile individual object files
-%.o: %.cpp
+obj/%.o: src/%.cpp
 	$(CC) $(FLAGS) -c $< -o $@
 
 # Clean object files
