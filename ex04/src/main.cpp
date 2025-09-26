@@ -8,46 +8,39 @@ int	main(int ac, char **av)
 	std::string line;
 	std::string processedline;
 	std::string nameOutfile;
-	
-	if (ac != 4)
-		return (std::cout << "Bad arguments" << std::endl, 1);
-	FileReader inFile("test/" + std::string(av[1]));
-	nameOutfile = std::string(av[1]) + ".replace";
-	std::ofstream outFile(nameOutfile.c_str());
-	while (inFile.getNextLine(line))
+	try
 	{
-		processedline = processLine(line, av[2], av[3]);
-		if (outFile.is_open())
-			outFile << processedline << std::endl;
-		else
-			return (std::cout << "Could not open output file" << std::endl, 1);
+		if (ac != 4)
+			throw std::runtime_error("Bad number of arguments");
+		if (std::string(av[2]).length() == 0
+			|| std::string(av[3]).length() == 0)
+			throw std::runtime_error("Empty strings are not accepted");
+		FileReader inFile("test/" + std::string(av[1]));
+		nameOutfile = std::string(av[1]) + ".replace";
+		std::ofstream outFile(nameOutfile.c_str());
+		while (inFile.getNextLine(line))
+		{
+			processedline = processLine(line, av[2], av[3]);
+			if (outFile.is_open())
+				outFile << processedline << std::endl;
+			else
+				throw std::runtime_error("Could not open output file");
+		}
+	}
+	catch (std::exception &e)
+	{
+		std::cout << "👺 Error caught exception: " << e.what() << std::endl;
 	}
 }
-
 /*
-
-	INPUT: ./ input is cat
-
+	Sections of the program
 	//A. error handling
-		1. wrong No arguments
-		2. infile does not exist or cant be opened
+		1. wrong No arguments - done
+		2. infile does not exist or cant be opened - done
 		3. s1="" and/ s2=""
-		* case for empty file
-
-	if (ac != 4)
-		return (std::cout << "Bad arguments" << std::endl, 1);
-
+		4. * case for empty file
 	//B. Open file input and set output
-	inFile.open(av[1]);
-	if (!inFile.is_open())
-		return (std::cout << "Could not open input file" << std::endl, 1);
-	nameOutfile = std::string(av[1]) + ".replace";
-	std::ofstream outFile(nameOutfile.c_str());
-	if (!outFile.is_open())
-		return (std::cout << "Could not open output file" << std::endl, 1);
-	//LOOP
 	//C. Read line
-
 	//D. Replace words in line
 	//E. Put final line in file
 */
